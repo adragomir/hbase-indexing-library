@@ -33,10 +33,35 @@
     <version>0.1-dev</version>
   </parent>
 
+  <properties>
+    <hadoop.version>0.20.3-append-r956776+1240</hadoop.version>
+  </properties>
+
+  <repositories>
+    <repository>
+         <id>temp-hadoop</id>
+         <name>Hadoop 0.20.1/2 packaging, thrift, zk</name>
+         <url>http://people.apache.org/~rawson/repo/</url>
+         <snapshots>
+           <enabled>false</enabled>
+         </snapshots>
+         <releases>
+           <enabled>true</enabled>
+         </releases>
+     </repository>
+  </repositories>
+
   <build>
   </build>
 
   <dependencies>
+    <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-test</artifactId>
+            <version>${hadoop.version}</version>
+            <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase</artifactId>
