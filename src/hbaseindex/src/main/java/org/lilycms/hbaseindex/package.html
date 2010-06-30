@@ -1,0 +1,143 @@
+<html>
+<body>
+<h1>Intro</h1>
+<p>This package contains a library that aids in building and
+  querying indexes on top of HBase, in Google App Engine datastore-style.
+  This basically means querying by range-scanning on specifically constructed index tables.</p>
+
+<p>The goal of this library is to hide the details of playing with HBase's byte[] row keys
+  to construct indexes. Actually pushing data towards the index is not handled by this package.</p>
+
+<p>Some background on the indexing approach in this package can be found in
+  <a href="http://brunodumon.wordpress.com/2010/02/17/building-indexes-using-hbase-mapping-strings-numbers-and-dates-onto-bytes/"
+          >this blog post</a>.</p>
+
+<h1>General</h1>
+
+<p>Each index corresponds to one HBase table.</p>
+
+<p>The configuration of the indexes is stored in an HBase table, by
+  default called "indexmeta".</p>
+
+<h1>Usage</h1>
+
+<h2>Creating (defining) an index</h2>
+
+<pre>
+  // If you do not want to use "indexmeta" for the index meta table name,
+  // you can supply an additional argument to IndexManager
+  IndexManager indexManager = new IndexManager(hbaseConf);
+
+  IndexDefinition indexDef = new IndexDefinition("myindex");
+  StringIndexFieldDefinition stringField = indexDef.addStringField("myStringField");
+  // you can call methods on the stringField object to set further options on the field
+
+  indexDef.addIntegerField("myIntField");
+
+  indexManager.createIndex(indexDef);
+</pre>
+
+<p>Once created, the structure of an index cannot be changed.</p>
+
+<h2>Updating an index</h2>
+
+<pre>
+  IndexManager indexManager = new IndexManager(hbaseConf);
+
+  Index index = indexManager.getIndex("myindex");
+
+  // Add many entries like this
+  IndexEntry entry = new IndexEntry();
+  entry.addField("myStringField", "foobar");
+  entry.addField("myIntField", 55);
+  index.addEntry(entry, Bytes.toBytes("identifier"));
+
+  // The 'identifier' above is whatever you like as identifier for the
+  // indexed object -- usually a row key in some other HBase table.
+
+  // You can remove entries by calling removeEntry with the
+  // same values and identifier. Updating consists of deleting
+  // and re-adding.
+</pre>
+
+<h2>Querying an index</h2>
+
+<pre>
+  IndexManager indexManager = new IndexManager(hbaseConf);
+
+  Index index = indexManager.getIndex("myindex");
+
+  Query query = new Query();
+  query.addEqualsCondition("myStringField", "foobar");
+  query.setRangeCondition("myIntField", 50, 60);
+
+  QueryResult result = index.performQuery(query);
+
+  byte[] identifier;
+  while ((identifier = result.next()) != null) {
+    System.out.println(Bytes.toString(rowkey));
+  }
+</pre>
+
+<p>You need to fill the query objects with equals conditions
+  and optionally one range condition. You need to use the fields
+  in the index from left to right, and only on the rightmost used
+  field a range condition can be used.</p>
+
+<p>Range conditions by default have inclusive bounds ('greater
+  than or equals' and 'less than or equals'), but as
+  you can find in the API exclusive bounds are also possible.</p>
+
+<h1>Misc</h1>
+
+<h2>Merging results from multiple indexes</h2>
+
+<p>If you build up your queries such that each identifier in the result
+  is unique, then you can merge results from multiple indexes as an
+  "AND" or "OR" operation.</p>
+
+<p>This is done by using the classes Conjunction or Disjunction.</p>
+
+<p>The way it works is that you build up your two queries and obtain
+  their results, and then supply them to a conjunction:</p>
+
+<pre>
+  QueryResult result1 = index.performQuery(query1);
+  QueryResult result2 = index.performQuery(query2);
+
+  Conjunction conjunction = new Conjunction(result1, result2);
+
+  // Conjunction also implements the QueryResult interface, so
+  // it is used in the same way
+
+  byte[] identifier;
+  while ((identifier = conjunction.next()) != null) {
+    System.out.println(Bytes.toString(rowkey));
+  }
+</pre>
+
+<p>If you want to combine more than two indexes, you could nest multiple
+  Conjunctions.</p>
+
+<h2>Null values</h2>
+
+<p>Indexing and querying on null values is supported.</p>
+
+<p>This works because in the index row key there is a meta-byte for
+  each field which records if the field is null or not.</p>
+
+<h2>Using key-value style indexes</h2>
+
+<p>Note that you could create an index with "key" and "value" fields
+  to create a more generic index, a bit like you would create a key-value
+  table in a SQL database.</p>
+
+<p>In this case, using a Conjunction with queryresults from the same
+  table can be useful.</p>
+
+<h2>NOT-queries</h2>
+
+<p>NOT queries can be handled manually by combining two range queries.</p>
+
+</body>
+</html>
