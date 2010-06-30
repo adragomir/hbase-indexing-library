@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AntConfiguration">
+    <defaultAnt bundledAnt="true" />
+  </component>
+  <component name="CCaseConfig">
+    <option name="checkoutReserved" value="false" />
+    <option name="markExternalChangeAsUpToDate" value="true" />
+    <option name="checkInUseHijack" value="true" />
+    <option name="useUcmModel" value="true" />
+    <option name="isOffline" value="false" />
+    <option name="synchOutside" value="false" />
+    <option name="isHistoryResticted" value="true" />
+    <option name="useIdenticalSwitch" value="true" />
+    <option name="synchActivitiesOnRefresh" value="true" />
+    <option name="lastScr" value="" />
+    <option name="scrTextFileName" value="" />
+    <option name="historyRevisionsNumber" value="4" />
+  </component>
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Javac" />
+    <resourceExtensions>
+      <entry name=".+\.(properties|xml|html|dtd|tld)" />
+      <entry name=".+\.(gif|png|jpeg|jpg)" />
+    </resourceExtensions>
+    <wildcardResourcePatterns>
+      <entry name="?*.properties" />
+      <entry name="?*.xml" />
+      <entry name="?*.gif" />
+      <entry name="?*.png" />
+      <entry name="?*.jpeg" />
+      <entry name="?*.jpg" />
+      <entry name="?*.html" />
+      <entry name="?*.dtd" />
+      <entry name="?*.tld" />
+      <entry name="?*.ftl" />
+    </wildcardResourcePatterns>
+    <annotationProcessing enabled="false" useClasspath="true" />
+  </component>
+  <component name="CopyrightManager" default="">
+    <module2copyright />
+  </component>
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
+  <component name="EclipseCompilerSettings">
+    <option name="GENERATE_NO_WARNINGS" value="true" />
+    <option name="DEPRECATION" value="false" />
+  </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="IdProvider" IDEtalkID="2B78482CF1DBE946407F09887081294F" />
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_STRING" value="-target 1.5" />
+  </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" />
+    <option name="OPTION_SCOPE" value="protected" />
+    <option name="OPTION_HIERARCHY" value="true" />
+    <option name="OPTION_NAVIGATOR" value="true" />
+    <option name="OPTION_INDEX" value="true" />
+    <option name="OPTION_SEPARATE_INDEX" value="true" />
+    <option name="OPTION_DOCUMENT_TAG_USE" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_AUTHOR" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_VERSION" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_DEPRECATED" value="true" />
+    <option name="OPTION_DEPRECATED_LIST" value="true" />
+    <option name="OTHER_OPTIONS" value="" />
+    <option name="HEAP_SIZE" />
+    <option name="LOCALE" />
+    <option name="OPEN_IN_BROWSER" value="true" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../src/pom.xml" />
+      </list>
+    </option>
+    <option name="activeProfiles">
+      <list>
+        <option value="fast" />
+      </list>
+    </option>
+  </component>
+  <component name="Palette2">
+    <group name="Swing">
+      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
+      </item>
+      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
+      </item>
+      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
+        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
+        <initial-values>
+          <property name="text" value="Button" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="RadioButton" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="CheckBox" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="Label" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+          <preferred-size width="200" height="200" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+          <preferred-size width="200" height="200" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
+      </item>
+      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
+          <preferred-size width="-1" height="20" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
+      </item>
+      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
+      </item>
+    </group>
+  </component>
+  <component name="ProjectKey">
+    <option name="state" value="project://default" />
+  </component>
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../src/lily.iml" filepath="$PROJECT_DIR$/../src/lily.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../src/hbaseindex/lily-hbaseindex.iml" filepath="$PROJECT_DIR$/../src/hbaseindex/lily-hbaseindex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../src/testfw/lily-testfw.iml" filepath="$PROJECT_DIR$/../src/testfw/lily-testfw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../src/util/lily-util.iml" filepath="$PROJECT_DIR$/../src/util/lily-util.iml" />
+    </modules>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="StarteamConfiguration">
+    <option name="SERVER" value="" />
+    <option name="PORT" value="49201" />
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="PROJECT" value="" />
+    <option name="VIEW" value="" />
+    <option name="ALTERNATIVE_WORKING_PATH" value="" />
+    <option name="LOCK_ON_CHECKOUT" value="false" />
+    <option name="UNLOCK_ON_CHECKIN" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="UPDATE_RUN_STATUS" value="false" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+  </component>
+  <component name="VssConfiguration">
+    <option name="CLIENT_PATH" value="" />
+    <option name="SRCSAFEINI_PATH" value="" />
+    <option name="USER_NAME" value="" />
+    <option name="PWD" value="" />
+    <CheckoutOptions>
+      <option name="COMMENT" value="" />
+      <option name="DO_NOT_GET_LATEST_VERSION" value="false" />
+      <option name="REPLACE_WRITABLE" value="false" />
+      <option name="RECURSIVE" value="false" />
+    </CheckoutOptions>
+    <CheckinOptions>
+      <option name="COMMENT" value="" />
+      <option name="KEEP_CHECKED_OUT" value="false" />
+      <option name="RECURSIVE" value="false" />
+    </CheckinOptions>
+    <AddOptions>
+      <option name="STORE_ONLY_LATEST_VERSION" value="false" />
+      <option name="CHECK_OUT_IMMEDIATELY" value="false" />
+    </AddOptions>
+    <UndocheckoutOptions>
+      <option name="MAKE_WRITABLE" value="false" />
+      <option name="REPLACE_LOCAL_COPY" value="2" />
+      <option name="RECURSIVE" value="false" />
+    </UndocheckoutOptions>
+    <GetOptions>
+      <option name="REPLACE_WRITABLE" value="0" />
+      <option name="MAKE_WRITABLE" value="false" />
+      <option name="ANSWER_NEGATIVELY" value="false" />
+      <option name="ANSWER_POSITIVELY" value="false" />
+      <option name="RECURSIVE" value="false" />
+      <option name="VERSION" />
+    </GetOptions>
+  </component>
+  <component name="libraryTable">
+    <library name="Maven: log4j:log4j:1.2.15">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.15/log4j-1.2.15.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.15/log4j-1.2.15-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.15/log4j-1.2.15-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: javax.mail:mail:1.4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4/mail-1.4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4/mail-1.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4/mail-1.4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: javax.activation:activation:1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: javax.jms:jms:1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/jms/jms/1.1/jms-1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/jms/jms/1.1/jms-1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/jms/jms/1.1/jms-1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.slf4j:slf4j-log4j12:1.5.10">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-log4j12/1.5.10/slf4j-log4j12-1.5.10.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-log4j12/1.5.10/slf4j-log4j12-1.5.10-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-log4j12/1.5.10/slf4j-log4j12-1.5.10-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.slf4j:slf4j-api:1.5.10">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.5.10/slf4j-api-1.5.10.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.5.10/slf4j-api-1.5.10-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.5.10/slf4j-api-1.5.10-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.hbase:hbase:0.21.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase/0.21.0-SNAPSHOT/hbase-0.21.0-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase/0.21.0-SNAPSHOT/hbase-0.21.0-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase/0.21.0-SNAPSHOT/hbase-0.21.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-cli:commons-cli:1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.2/commons-cli-1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.2/commons-cli-1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.2/commons-cli-1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-httpclient:commons-httpclient:3.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-logging:commons-logging:1.1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-lang:commons-lang:2.5">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.5/commons-lang-2.5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.5/commons-lang-2.5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.5/commons-lang-2.5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.thrift:thrift:0.2.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/thrift/thrift/0.2.0/thrift-0.2.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/thrift/thrift/0.2.0/thrift-0.2.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/thrift/thrift/0.2.0/thrift-0.2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.slf4j:slf4j-api:1.4.3">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.4.3/slf4j-api-1.4.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.4.3/slf4j-api-1.4.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.4.3/slf4j-api-1.4.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.guava:guava:r05">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/r05/guava-r05.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/r05/guava-r05-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/r05/guava-r05-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-net:commons-net:1.4.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-net/commons-net/1.4.1/commons-net-1.4.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-net/commons-net/1.4.1/commons-net-1.4.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-net/commons-net/1.4.1/commons-net-1.4.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: oro:oro:2.0.8">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/oro/oro/2.0.8/oro-2.0.8.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/oro/oro/2.0.8/oro-2.0.8-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/oro/oro/2.0.8/oro-2.0.8-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jetty:6.1.24">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty/6.1.24/jetty-6.1.24.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty/6.1.24/jetty-6.1.24-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty/6.1.24/jetty-6.1.24-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jetty-util:6.1.24">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty-util/6.1.24/jetty-util-6.1.24.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty-util/6.1.24/jetty-util-6.1.24-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty-util/6.1.24/jetty-util-6.1.24-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:servlet-api-2.5:6.1.14">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api-2.5/6.1.14/servlet-api-2.5-6.1.14.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api-2.5/6.1.14/servlet-api-2.5-6.1.14-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api-2.5/6.1.14/servlet-api-2.5-6.1.14-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jsp-2.1:6.1.14">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jsp-2.1/6.1.14/jsp-2.1-6.1.14.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jsp-2.1/6.1.14/jsp-2.1-6.1.14-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jsp-2.1/6.1.14/jsp-2.1-6.1.14-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt:core:3.1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/3.1.1/core-3.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/3.1.1/core-3.1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/3.1.1/core-3.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jsp-api-2.1:6.1.14">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jsp-api-2.1/6.1.14/jsp-api-2.1-6.1.14.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jsp-api-2.1/6.1.14/jsp-api-2.1-6.1.14-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jsp-api-2.1/6.1.14/jsp-api-2.1-6.1.14-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ant:ant:1.6.5">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ant/ant/1.6.5/ant-1.6.5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ant/ant/1.6.5/ant-1.6.5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ant/ant/1.6.5/ant-1.6.5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-el:commons-el:1.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-el/commons-el/1.0/commons-el-1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-el/commons-el/1.0/commons-el-1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-el/commons-el/1.0/commons-el-1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.ant:ant-launcher:1.7.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.7.1/ant-launcher-1.7.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.7.1/ant-launcher-1.7.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.7.1/ant-launcher-1.7.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: xmlenc:xmlenc:0.52">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/xmlenc/xmlenc/0.52/xmlenc-0.52.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/xmlenc/xmlenc/0.52/xmlenc-0.52-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/xmlenc/xmlenc/0.52/xmlenc-0.52-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.hadoop:zookeeper:3.3.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/zookeeper/3.3.1/zookeeper-3.3.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/zookeeper/3.3.1/zookeeper-3.3.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/zookeeper/3.3.1/zookeeper-3.3.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: jline:jline:0.9.94">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/jline/jline/0.9.94/jline-0.9.94.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/jline/jline/0.9.94/jline-0.9.94-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/jline/jline/0.9.94/jline-0.9.94-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: junit:junit:4.8.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.1/junit-4.8.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.1/junit-4.8.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.1/junit-4.8.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:servlet-api:2.5-20081211">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api/2.5-20081211/servlet-api-2.5-20081211.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api/2.5-20081211/servlet-api-2.5-20081211-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api/2.5-20081211/servlet-api-2.5-20081211-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: tomcat:jasper-runtime:5.5.23">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/tomcat/jasper-runtime/5.5.23/jasper-runtime-5.5.23-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: tomcat:jasper-compiler:5.5.23">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/tomcat/jasper-compiler/5.5.23/jasper-compiler-5.5.23-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: javax.servlet:jsp-api:2.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/jsp-api/2.0/jsp-api-2.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/jsp-api/2.0/jsp-api-2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.jruby:jruby-complete:1.4.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jruby/jruby-complete/1.4.0/jruby-complete-1.4.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jruby/jruby-complete/1.4.0/jruby-complete-1.4.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jruby/jruby-complete/1.4.0/jruby-complete-1.4.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.protobuf:protobuf-java:2.3.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/2.3.0/protobuf-java-2.3.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/2.3.0/protobuf-java-2.3.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/2.3.0/protobuf-java-2.3.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.sun.jersey:jersey-core:1.1.5.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-core/1.1.5.1/jersey-core-1.1.5.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-core/1.1.5.1/jersey-core-1.1.5.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-core/1.1.5.1/jersey-core-1.1.5.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: javax.ws.rs:jsr311-api:1.1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/ws/rs/jsr311-api/1.1.1/jsr311-api-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/ws/rs/jsr311-api/1.1.1/jsr311-api-1.1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/ws/rs/jsr311-api/1.1.1/jsr311-api-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.sun.jersey:jersey-json:1.1.5.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-json/1.1.5.1/jersey-json-1.1.5.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-json/1.1.5.1/jersey-json-1.1.5.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-json/1.1.5.1/jersey-json-1.1.5.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.codehaus.jettison:jettison:1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jettison/jettison/1.1/jettison-1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jettison/jettison/1.1/jettison-1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jettison/jettison/1.1/jettison-1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: stax:stax-api:1.0.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/stax/stax-api/1.0.1/stax-api-1.0.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/stax/stax-api/1.0.1/stax-api-1.0.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/stax/stax-api/1.0.1/stax-api-1.0.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.sun.xml.bind:jaxb-impl:2.1.12">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/xml/bind/jaxb-impl/2.1.12/jaxb-impl-2.1.12.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/xml/bind/jaxb-impl/2.1.12/jaxb-impl-2.1.12-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/xml/bind/jaxb-impl/2.1.12/jaxb-impl-2.1.12-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: javax.xml.bind:jaxb-api:2.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: javax.xml.stream:stax-api:1.0-2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.codehaus.jackson:jackson-core-asl:1.4.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-core-asl/1.4.2/jackson-core-asl-1.4.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-core-asl/1.4.2/jackson-core-asl-1.4.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-core-asl/1.4.2/jackson-core-asl-1.4.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.sun.jersey:jersey-server:1.1.5.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-server/1.1.5.1/jersey-server-1.1.5.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-server/1.1.5.1/jersey-server-1.1.5.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-server/1.1.5.1/jersey-server-1.1.5.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: asm:asm:3.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/asm/asm/3.1/asm-3.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/asm/asm/3.1/asm-3.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/asm/asm/3.1/asm-3.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.hadoop:avro:1.3.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/avro/1.3.2/avro-1.3.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/avro/1.3.2/avro-1.3.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/avro/1.3.2/avro-1.3.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.4.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-mapper-asl/1.4.2/jackson-mapper-asl-1.4.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-mapper-asl/1.4.2/jackson-mapper-asl-1.4.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-mapper-asl/1.4.2/jackson-mapper-asl-1.4.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.thoughtworks.paranamer:paranamer:2.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer/2.2/paranamer-2.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer/2.2/paranamer-2.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer/2.2/paranamer-2.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.thoughtworks.paranamer:paranamer-ant:2.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer-ant/2.2/paranamer-ant-2.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer-ant/2.2/paranamer-ant-2.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer-ant/2.2/paranamer-ant-2.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.thoughtworks.paranamer:paranamer-generator:2.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer-generator/2.2/paranamer-generator-2.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer-generator/2.2/paranamer-generator-2.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer-generator/2.2/paranamer-generator-2.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.thoughtworks.qdox:qdox:1.10.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/qdox/qdox/1.10.1/qdox-1.10.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/qdox/qdox/1.10.1/qdox-1.10.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/qdox/qdox/1.10.1/qdox-1.10.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.hbase:hbase:tests:0.21.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase/0.21.0-SNAPSHOT/hbase-0.21.0-SNAPSHOT-tests.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase/0.21.0-SNAPSHOT/hbase-0.21.0-SNAPSHOT-tests-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase/0.21.0-SNAPSHOT/hbase-0.21.0-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase/0.21.0-SNAPSHOT/hbase-0.21.0-SNAPSHOT-tests-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hbase/hbase/0.21.0-SNAPSHOT/hbase-0.21.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.hadoop:hadoop-test:0.20.3-append-r956776+1240">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-test/0.20.3-append-r956776+1240/hadoop-test-0.20.3-append-r956776+1240.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-test/0.20.3-append-r956776+1240/hadoop-test-0.20.3-append-r956776+1240-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-test/0.20.3-append-r956776+1240/hadoop-test-0.20.3-append-r956776+1240-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.hadoop:hadoop-core:0.20.3-append-r956776">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-core/0.20.3-append-r956776/hadoop-core-0.20.3-append-r956776.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-core/0.20.3-append-r956776/hadoop-core-0.20.3-append-r956776-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/hadoop/hadoop-core/0.20.3-append-r956776/hadoop-core-0.20.3-append-r956776-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-codec:commons-codec:1.3">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.3/commons-codec-1.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.3/commons-codec-1.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.3/commons-codec-1.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.java.dev.jets3t:jets3t:0.7.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jets3t/jets3t/0.7.1/jets3t-0.7.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jets3t/jets3t/0.7.1/jets3t-0.7.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jets3t/jets3t/0.7.1/jets3t-0.7.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.sf.kosmosfs:kfs:0.3">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/sf/kosmosfs/kfs/0.3/kfs-0.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/sf/kosmosfs/kfs/0.3/kfs-0.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/sf/kosmosfs/kfs/0.3/kfs-0.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: hsqldb:hsqldb:1.8.0.10">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/hsqldb/hsqldb/1.8.0.10/hsqldb-1.8.0.10.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/hsqldb/hsqldb/1.8.0.10/hsqldb-1.8.0.10-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/hsqldb/hsqldb/1.8.0.10/hsqldb-1.8.0.10-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.ftpserver:ftplet-api:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftplet-api/1.0.0/ftplet-api-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftplet-api/1.0.0/ftplet-api-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftplet-api/1.0.0/ftplet-api-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.mina:mina-core:2.0.0-M5">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/mina/mina-core/2.0.0-M5/mina-core-2.0.0-M5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/mina/mina-core/2.0.0-M5/mina-core-2.0.0-M5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/mina/mina-core/2.0.0-M5/mina-core-2.0.0-M5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.ftpserver:ftpserver-core:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftpserver-core/1.0.0/ftpserver-core-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftpserver-core/1.0.0/ftpserver-core-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftpserver-core/1.0.0/ftpserver-core-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.ftpserver:ftpserver-deprecated:1.0.0-M2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftpserver-deprecated/1.0.0-M2/ftpserver-deprecated-1.0.0-M2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftpserver-deprecated/1.0.0-M2/ftpserver-deprecated-1.0.0-M2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ftpserver/ftpserver-deprecated/1.0.0-M2/ftpserver-deprecated-1.0.0-M2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: javax.servlet:servlet-api:2.4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/servlet-api/2.4/servlet-api-2.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/servlet-api/2.4/servlet-api-2.4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.ant:ant:1.7.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.7.1/ant-1.7.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.7.1/ant-1.7.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.7.1/ant-1.7.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+  </component>
+</project>
+

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.hadoop:hadoop-test:0.20.3-append-r956776+1240" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.hadoop:hadoop-core:0.20.3-append-r956776" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-cli:commons-cli:1.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: xmlenc:xmlenc:0.52" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-codec:commons-codec:1.3" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-net:commons-net:1.4.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: oro:oro:2.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:jetty:6.1.24" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:jetty-util:6.1.24" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:servlet-api-2.5:6.1.14" level="project" />
+    <orderEntry type="library" exported="" name="Maven: tomcat:jasper-runtime:5.5.23" level="project" />
+    <orderEntry type="library" exported="" name="Maven: tomcat:jasper-compiler:5.5.23" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:jsp-api-2.1:6.1.14" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:jsp-2.1:6.1.14" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.eclipse.jdt:core:3.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: ant:ant:1.6.5" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-el:commons-el:1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: net.java.dev.jets3t:jets3t:0.7.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: net.sf.kosmosfs:kfs:0.3" level="project" />
+    <orderEntry type="library" exported="" name="Maven: hsqldb:hsqldb:1.8.0.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.ftpserver:ftplet-api:1.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.mina:mina-core:2.0.0-M5" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.4.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.ftpserver:ftpserver-core:1.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.ftpserver:ftpserver-deprecated:1.0.0-M2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.hbase:hbase:0.21.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-lang:commons-lang:2.5" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Maven: log4j:log4j:1.2.15" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.thrift:thrift:0.2.0" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Maven: org.slf4j:slf4j-log4j12:1.5.10" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.google.guava:guava:r05" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.hadoop:zookeeper:3.3.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: jline:jline:0.9.94" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:servlet-api:2.5-20081211" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.servlet:jsp-api:2.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.jruby:jruby-complete:1.4.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.google.protobuf:protobuf-java:2.3.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.sun.jersey:jersey-core:1.1.5.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.ws.rs:jsr311-api:1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.sun.jersey:jersey-json:1.1.5.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.codehaus.jettison:jettison:1.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: stax:stax-api:1.0.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.sun.xml.bind:jaxb-impl:2.1.12" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.xml.bind:jaxb-api:2.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.codehaus.jackson:jackson-core-asl:1.4.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.sun.jersey:jersey-server:1.1.5.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: asm:asm:3.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.hadoop:avro:1.3.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.4.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.thoughtworks.paranamer:paranamer:2.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.thoughtworks.paranamer:paranamer-ant:2.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.thoughtworks.paranamer:paranamer-generator:2.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.thoughtworks.qdox:qdox:1.10.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.ant:ant:1.7.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.ant:ant-launcher:1.7.1" level="project" />
+    <orderEntry type="module" module-name="lily-util" exported="" />
+    <orderEntry type="module" module-name="lily-testfw" scope="TEST" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.hbase:hbase:tests:0.21.0-SNAPSHOT" level="project" />
+  </component>
+</module>
+
