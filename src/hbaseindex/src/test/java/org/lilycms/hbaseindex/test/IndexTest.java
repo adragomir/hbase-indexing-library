@@ -853,6 +853,37 @@ public class IndexTest {
         }
     }
 
+    @Test
+    public void testData() throws Exception {
+        final String INDEX_NAME = "dataIndex";
+        IndexManager indexManager = new IndexManager(TEST_UTIL.getConfiguration());
+
+        IndexDefinition indexDef = new IndexDefinition(INDEX_NAME);
+        indexDef.addStringField("field1");
+        indexManager.createIndex(indexDef);
+        Index index = indexManager.getIndex(INDEX_NAME);
+
+        String[] values = new String[] {"foo", "bar"};
+
+        for (String value : values) {
+            IndexEntry entry = new IndexEntry();
+            entry.addField("field1", value);
+            entry.addData(Bytes.toBytes("originalValue"), Bytes.toBytes(value));
+            index.addEntry(entry, Bytes.toBytes(value));
+        }
+
+
+        Query query = new Query();
+        query.setRangeCondition("field1", Query.MIN_VALUE, Query.MAX_VALUE);
+        QueryResult result = index.performQuery(query);
+
+        assertNotNull(result.next());
+        assertEquals("bar", result.getDataAsString("originalValue"));
+
+        assertNotNull(result.next());
+        assertEquals("foo", result.getDataAsString("originalValue"));
+    }
+
     private void assertResultIds(QueryResult result, String... identifiers) throws IOException {
         int i = 0;
         byte[] identifier;

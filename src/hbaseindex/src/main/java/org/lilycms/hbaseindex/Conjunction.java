@@ -31,8 +31,17 @@ import java.io.IOException;
  *
  * <p>A Conjunction itself also returns its results in increasing identifier
  * order, and can hence serve as input to other Conjunctions.
+ *
+ * <p>TODO the implementation is currently not optimal if lots of rows need
+ * to be skipped to move to the next common result, since this is done by
+ * iterating one result at a time using next() calls. It would be better to
+ * directly skip to the next appropriate result. HBase scanners don't support
+ * this natively, so to skip we would rather need to open a new scanner. But
+ * we can't exactly know on beforehand if this will be beneficial or not. Maybe
+ * we could have some heuristic for this, e.g. after 10 next() calls open a new
+ * scanner to jump directly to the next relevant result.
  */
-public class Conjunction implements QueryResult {
+public class Conjunction extends BaseQueryResult {
     private QueryResult result1;
     private QueryResult result2;
 
@@ -68,7 +77,7 @@ public class Conjunction implements QueryResult {
             }
         }
 
+        currentQResult = result1;
         return key1;
     }
-
 }

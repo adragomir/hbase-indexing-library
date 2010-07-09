@@ -32,7 +32,6 @@ public class IndexDefinitionSerializationTest {
         StringIndexFieldDefinition newField = (StringIndexFieldDefinition)newIndexDef.getField("stringfield");
 
         assertEquals(field.getName(), newField.getName());
-        assertEquals(field.getLength(), newField.getLength());
         assertEquals(field.isCaseSensitive(), newField.isCaseSensitive());
         assertEquals(field.getByteEncodeMode(), newField.getByteEncodeMode());
         assertEquals(field.getLocale(), newField.getLocale());

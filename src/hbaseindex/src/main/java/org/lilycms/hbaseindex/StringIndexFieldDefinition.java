@@ -15,7 +15,6 @@
  */
 package org.lilycms.hbaseindex;
 
-import org.apache.hadoop.hbase.util.Bytes;
 import org.codehaus.jackson.node.ObjectNode;
 import org.lilycms.util.ArgumentValidator;
 import org.lilycms.util.LocaleHelper;
@@ -30,10 +29,11 @@ import java.util.Map;
 /**
  * A string field in an index.
  *
+ * <p>Strings can be of variable length, therefore the {#setLength} method returns -1.
+ *
  * <p>Various options can be set for this field:
  *
  * <ul>
- *  <li>{@link #setLength}: the length in bytes
  *  <li>{@link #setByteEncodeMode}: the way a string should be mapped onto bytes: as utf8,
  *    by folding everything to ascii, or by using collation keys.
  *  <li>
@@ -44,7 +44,6 @@ import java.util.Map;
 public class StringIndexFieldDefinition extends IndexFieldDefinition {
     public enum ByteEncodeMode { UTF8, ASCII_FOLDING, COLLATOR }
 
-    private int length = 100;
     private Locale locale = Locale.US;
     private ByteEncodeMode byteEncodeMode = ByteEncodeMode.UTF8;
     private boolean caseSensitive = true;
@@ -57,6 +56,17 @@ public class StringIndexFieldDefinition extends IndexFieldDefinition {
         ENCODERS.put(ByteEncodeMode.COLLATOR, new CollatorStringEncoder());
     }
 
+    /**
+     * The end-of-field marker consists of all-zero-bits bytes. This is to achieve the effect
+     * that shorter strings would always sort before those that contain an additional character.
+     * Supposing a zero is an allowed byte within an encoded string, the further bytes should
+     * again be zeros for the same purpose.
+     *
+     * <p>This makes the assumption that a sequence of zero bytes will not occur in an encoded
+     * string (see also the toBytes method where this is checked, and where the same sequence is also hardcoded!)
+     */
+    private static final byte[] EOF_MARKER = new byte[] {0, 0, 0, 0};
+
     public StringIndexFieldDefinition(String name) {
         super(name, IndexValueType.STRING);
     }
@@ -64,23 +74,12 @@ public class StringIndexFieldDefinition extends IndexFieldDefinition {
     public StringIndexFieldDefinition(String name, ObjectNode jsonObject) {
         super(name, IndexValueType.STRING, jsonObject);
 
-        if (jsonObject.get("length") != null)
-            this.length = jsonObject.get("length").getIntValue();
         if (jsonObject.get("locale") != null)
             this.locale = LocaleHelper.parseLocale(jsonObject.get("locale").getTextValue());
         if (jsonObject.get("byteEncodeMode") != null)
             this.byteEncodeMode = ByteEncodeMode.valueOf(jsonObject.get("byteEncodeMode").getTextValue());
         if (jsonObject.get("caseSensitive") != null)
             this.caseSensitive = jsonObject.get("caseSensitive").getBooleanValue();
-    }
-
-    /**
-     * The number of bytes this field takes in a index entry. This is
-     * not the same as the number of characters, the number of bytes
-     * needed for one characters depends on the mode. 
-     */
-    public void setLength(int length) {
-        this.length = length;
     }
 
     public Locale getLocale() {
@@ -124,15 +123,16 @@ public class StringIndexFieldDefinition extends IndexFieldDefinition {
     }
 
     public int getLength() {
-        return length;
-    }
-
-    public int toBytes(byte[] bytes, int offset, Object value) {
-        return toBytes(bytes, offset, value, true);
+        return -1;
     }
 
     @Override
-    public int toBytes(byte[] bytes, int offset, Object value, boolean fillFieldLength) {
+    public byte[] getEndOfFieldMarker() {
+        return EOF_MARKER;
+    }
+
+    @Override
+    public byte[] toBytes(Object value) {
         String string = (String)value;
         string = Normalizer.normalize(string, Normalizer.Form.NFC);
 
@@ -140,12 +140,17 @@ public class StringIndexFieldDefinition extends IndexFieldDefinition {
             string = string.toLowerCase(locale);
         }
 
-        byte[] stringAsBytes = ENCODERS.get(byteEncodeMode).toBytes(string, locale);
+        byte[] bytes = ENCODERS.get(byteEncodeMode).toBytes(string, locale);
 
-        int putLength = stringAsBytes.length < length ? stringAsBytes.length : length;
-        int newOffset = Bytes.putBytes(bytes, offset, stringAsBytes, 0, putLength);
-
-        return fillFieldLength ? offset + length : newOffset;
+        for (int i = 0; i <= bytes.length - 4; i++) {
+            if (bytes[i] == 0 && bytes[i + 1] == 0 && bytes[i + 2] == 0 && bytes[i + 3] == 0) {
+                // TODO what are the chances of this happening?
+                // For most cases it does actually not matter if the EOF sequence would appear
+                // in the encoded string, but for equals-string searches it matters.
+                throw new RuntimeException("Encoded string value contains the end-of-field marker (zero byte).");
+            }
+        }
+        return bytes;
     }
 
     private interface StringEncoder {
@@ -182,7 +187,6 @@ public class StringIndexFieldDefinition extends IndexFieldDefinition {
     @Override
     public ObjectNode toJson() {
         ObjectNode object = super.toJson();
-        object.put("length", length);
         object.put("locale", LocaleHelper.getString(locale));
         object.put("byteEncodeMode", byteEncodeMode.toString());
         object.put("caseSensitive", caseSensitive);

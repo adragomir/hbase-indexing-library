@@ -31,4 +31,16 @@ public class StaticQueryResult implements QueryResult {
     public byte[] next() throws IOException {
         return iterator.hasNext() ? iterator.next() : null;
     }
+    
+    public byte[] getData(byte[] qualifier) {
+        return null;
+    }
+
+    public String getDataAsString(String qualifier) {
+        return null;
+    }
+
+    public byte[] getData(String qualifier) {
+        return null;
+    }
 }

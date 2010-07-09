@@ -66,12 +66,7 @@ public class DateTimeIndexFieldDefinition  extends IndexFieldDefinition {
     }
 
     @Override
-    public int toBytes(byte[] bytes, int offset, Object value) {
-        return toBytes(bytes, offset, value, true);
-    }
-
-    @Override
-    public int toBytes(byte[] bytes, int offset, Object value, boolean fillFieldLength) {
+    public byte[] toBytes(Object value) {
         Date date = (Date)value;
 
         Calendar calendar = new GregorianCalendar();
@@ -106,21 +101,21 @@ public class DateTimeIndexFieldDefinition  extends IndexFieldDefinition {
                 throw new RuntimeException("Unexpected precision: " + precision);
         }
 
-        int nextOffset;
+        byte[] bytes = new byte[getLength()];
 
         switch (precision) {
             case TIME:
             case TIME_NOMILLIS:
-                nextOffset = Bytes.putInt(bytes, offset, (int)result);
+                Bytes.putInt(bytes, 0, (int)result);
                 break;
             default:
-                nextOffset = Bytes.putLong(bytes, offset, result);
+                Bytes.putLong(bytes, 0, result);
         }
 
         // To make the ints/longs sort correctly when comparing their binary
         // representations, we need to invert the sign bit
-        bytes[offset] = (byte)(bytes[offset] ^ 0x80);
-        return nextOffset;
+        bytes[0] = (byte)(bytes[0] ^ 0x80);
+        return bytes;
     }
 
     @Override

@@ -33,19 +33,15 @@ public class IntegerIndexFieldDefinition extends IndexFieldDefinition {
     }
 
     @Override
-    public int toBytes(byte[] bytes, int offset, Object value) {
-        return toBytes(bytes, offset, value, true);
-    }
-
-    @Override
-    public int toBytes(byte[] bytes, int offset, Object value, boolean fillFieldLength) {
+    public byte[] toBytes(Object value) {
+        byte[] bytes = new byte[getLength()];
         int integer = (Integer)value;
-        int nextOffset = Bytes.putInt(bytes, offset, integer);
+        Bytes.putInt(bytes, 0, integer);
 
         // To make the integers sort correctly when comparing their binary
         // representations, we need to invert the sign bit
-        bytes[offset] ^= 0x80;
+        bytes[0] ^= 0x80;
 
-        return nextOffset;
+        return bytes;
     }
 }

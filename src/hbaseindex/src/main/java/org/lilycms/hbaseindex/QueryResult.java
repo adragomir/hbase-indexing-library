@@ -28,4 +28,14 @@ public interface QueryResult {
      * @return the identifier of the next matching query result, or null if the end is reached.
      */
     public byte[] next() throws IOException;
+
+    /**
+     * Retrieves data that was stored as part of the {@link IndexEntry} from the current index
+     * entry (corresponding to the last {@link #next} call).
+     */
+    public byte[] getData(byte[] qualifier);
+
+    public byte[] getData(String qualifier);
+
+    public String getDataAsString(String qualifier);
 }

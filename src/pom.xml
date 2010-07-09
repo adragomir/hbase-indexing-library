@@ -32,6 +32,8 @@
   <version>0.1-dev</version>
   <name>Lily</name>
 
+  <url>http://lilycms.org/maven-site</url>
+
   <modules>
     <module>hbaseindex</module>
     <module>util</module>
@@ -50,6 +52,11 @@
         <artifactId>lily-testfw</artifactId>
         <version>0.1-dev</version>
         <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.lilycms</groupId>
+        <artifactId>lily-hbaseindex</artifactId>
+        <version>0.1-dev</version>
       </dependency>
       <dependency>
         <groupId>org.apache.hbase</groupId>
@@ -99,6 +106,38 @@
         <version>1.5.10</version>
         <scope>runtime</scope>
       </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.5.10</version>
+      </dependency>
+      <dependency>
+        <groupId>org.easymock</groupId>
+        <artifactId>easymock</artifactId>
+        <version>2.5.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.easymock</groupId>
+        <artifactId>easymockclassextension</artifactId>
+        <version>2.5.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-core-asl</artifactId>
+        <version>1.5.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+        <version>1.5.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -137,6 +176,11 @@
       <name>Lily CMS dev repository</name>
       <url>scp://lilycms.org/var/www/lily/maven/maven2/dev</url>
     </snapshotRepository>
+    <site>
+      <id>org.lilycms.website</id>
+      <name>Lily CMS maven website</name>
+      <url>scp://lilycms.org/var/www/lily/maven-site/</url>
+    </site>
   </distributionManagement>  
 
   <build>
@@ -149,6 +193,11 @@
             <target>1.5</target>
           </configuration>
         </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -161,5 +210,16 @@
       </properties>
     </profile>
   </profiles>
+  
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
   
 </project>

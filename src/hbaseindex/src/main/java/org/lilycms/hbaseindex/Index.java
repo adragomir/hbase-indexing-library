@@ -25,6 +25,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.lilycms.util.ArgumentValidator;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,12 +42,14 @@ public class Index {
     private HTable htable;
     private IndexDefinition definition;
 
-    private static final byte[] DUMMY_FAMILY = Bytes.toBytes("dummy");
+    protected static final byte[] DATA_FAMILY = Bytes.toBytes("data");
     private static final byte[] DUMMY_QUALIFIER = Bytes.toBytes("dummy");
     private static final byte[] DUMMY_VALUE = Bytes.toBytes("dummy");
 
     /** Number of bytes overhead per field. */
-    private static final int FIELD_OVERHEAD = 1;
+    private static final int FIELD_FLAGS_SIZE = 1;
+
+    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
     protected Index(HTable htable, IndexDefinition definition) {
         this.htable = htable;
@@ -69,8 +72,15 @@ public class Index {
         byte[] indexKey = buildRowKey(entry, identifier);
         Put put = new Put(indexKey);
 
-        // HBase does not allow to create a row without columns, so add a dummy column
-        put.add(DUMMY_FAMILY, DUMMY_QUALIFIER, DUMMY_VALUE);
+        Map<IndexEntry.ByteArrayKey, byte[]> data = entry.getData();
+        if (data.size() > 0) {
+            for (Map.Entry<IndexEntry.ByteArrayKey, byte[]> item : data.entrySet()) {
+                put.add(DATA_FAMILY, item.getKey().getKey(), item.getValue());
+            }
+        } else {
+            // HBase does not allow to create a row without columns, so add a dummy column
+            put.add(DATA_FAMILY, DUMMY_QUALIFIER, DUMMY_VALUE);
+        }
 
         htable.put(put);
     }
@@ -91,7 +101,7 @@ public class Index {
     }
 
     private void validateIndexEntry(IndexEntry indexEntry) {
-        for (Map.Entry<String, Object> entry : indexEntry.getValues().entrySet()) {
+        for (Map.Entry<String, Object> entry : indexEntry.getFields().entrySet()) {
             IndexFieldDefinition fieldDef = definition.getField(entry.getKey());
             if (fieldDef == null) {
                 throw new MalformedIndexEntryException("Index entry contains a field that is not part of " +
@@ -114,70 +124,83 @@ public class Index {
      * <p>The format is as follows:
      *
      * <pre>
-     * ([1 byte field flags][fixed length value as bytes])*[identifier]
+     * ([1 byte field flags][value as bytes][end-of-field marker in case of variable-length fields)*[identifier]
      * </pre>
      *
      * <p>The field flags are currently used to mark if a field is null
      * or not. If a field is null, its value will be encoded as all-zero bits.
      */
     private byte[] buildRowKey(IndexEntry entry, byte[] identifier) {
-        // calculate size of the index key
-        int keyLength = identifier.length + getIndexKeyLength();
+        List<byte[]> keyComponents = new ArrayList<byte[]>();
 
-        byte[] indexKey = new byte[keyLength];
-
-        // put data in the key
-        int offset = 0;
         for (IndexFieldDefinition fieldDef : definition.getFields()) {
             Object value = entry.getValue(fieldDef.getName());
-            offset = putField(indexKey, offset, fieldDef, value);
+            byte[] bytes = fieldToBytes(fieldDef, value, true);
+            keyComponents.add(bytes);
         }
 
-        // put identifier in the key
-        System.arraycopy(identifier, 0, indexKey, offset, identifier.length);
+        byte[] encodedIdentifier = IdentifierEncoding.encode(identifier);
+
+        // Calculate length of the index key
+        int keyLength = 0;
+        for (byte[] bytes : keyComponents) {
+            keyLength += bytes.length;
+        }
+        keyLength += encodedIdentifier.length;
+
+        // Create the index key
+        // Add all the fields
+        byte[] indexKey = new byte[keyLength];
+        int pos = 0;
+        for (byte[] bytes : keyComponents) {
+            System.arraycopy(bytes, 0, indexKey, pos, bytes.length);
+            pos += bytes.length;
+        }
+
+        // Add the identifier
+        System.arraycopy(encodedIdentifier, 0, indexKey, pos, encodedIdentifier.length);
 
         if (definition.getIdentifierOrder() == Order.DESCENDING) {
-            invertBits(indexKey, offset, indexKey.length);
+            invertBits(indexKey, pos, indexKey.length);
         }
 
         return indexKey;
     }
 
     /**
-     * The length of a row key in the index table excluding the identifier (which is variable
-     * length).
+     *
+     * @param includeEndMarker for variable-length fields, indicates that the end-of-field marker should be included
      */
-    private int getIndexKeyLength() {
-        int length = 0;
-        for (IndexFieldDefinition fieldDef : definition.getFields()) {
-            length += fieldDef.getLength() + FIELD_OVERHEAD;
-        }
-        return length;
-    }
-
-    private int putField(byte[] bytes, int offset, IndexFieldDefinition fieldDef, Object value) {
-        return putField(bytes, offset, fieldDef, value, true);
-    }
-
-    private int putField(byte[] bytes, int offset, IndexFieldDefinition fieldDef, Object value, boolean fillFieldLength) {
-        int origOffset = offset;
-
-        if (value == null) {
-            bytes[offset] = setNullFlag((byte)0);
-        }
-        offset++;
-
+    private byte[] fieldToBytes(IndexFieldDefinition fieldDef, Object value, boolean includeEndMarker) {
+        byte[] valueAsBytes;
         if (value != null) {
-            offset = fieldDef.toBytes(bytes, offset, value, fillFieldLength);
-        } else if (fillFieldLength) { // and value is null
-            offset += fieldDef.getLength();
+            valueAsBytes = fieldDef.toBytes(value);
+        } else {
+            valueAsBytes = new byte[0];
         }
 
+        byte[] eof = includeEndMarker ? fieldDef.getEndOfFieldMarker() : EMPTY_BYTE_ARRAY;
+
+        //
+        // Construct the result, which consists of flags + value + eof
+        //
+        int totalLength = FIELD_FLAGS_SIZE + valueAsBytes.length + eof.length;
+
+        byte[] bytes = new byte[totalLength];
+        if (value == null) {
+            bytes[0] = setNullFlag((byte)0);
+        }
+
+        System.arraycopy(valueAsBytes, 0, bytes, 1, valueAsBytes.length);
+
+        System.arraycopy(eof, 0, bytes, valueAsBytes.length + 1, eof.length);
+        
         if (fieldDef.getOrder() == Order.DESCENDING) {
-            invertBits(bytes, origOffset, offset);
+            // we invert everything, including the field flags (which is not really necessary)
+            invertBits(bytes, 0, bytes.length);
         }
 
-        return offset;
+        return bytes;
     }
 
     private void invertBits(byte[] bytes, int startOffset, int endOffset) {
@@ -191,16 +214,29 @@ public class Index {
     }
 
     public QueryResult performQuery(Query query) throws IOException {
-        // construct from and to keys
-        int indexKeyLength = getIndexKeyLength();
+        // First validate that all the fields used in the query exist in the index definition
+        for (Query.EqualsCondition eqCond : query.getEqConditions()) {
+            if (definition.getField(eqCond.getName()) == null) {
+                String msg = String.format("The query refers to a field which does not exist in this index: %1$s",
+                        eqCond.getName());
+                throw new MalformedQueryException(msg);
+            }
+        }
+        if (query.getRangeCondition() != null && definition.getField(query.getRangeCondition().getName()) == null) {
+            String msg = String.format("The query refers to a field which does not exist in this index: %1$s",
+                    query.getRangeCondition().getName());
+            throw new MalformedQueryException(msg);
+        }
 
-        byte[] fromKey = new byte[indexKeyLength];
-        byte[] toKey = null;
+        // Construct from and to keys
 
         List<IndexFieldDefinition> fieldDefs = definition.getFields();
 
+        List<byte[]> fromKeyComponents = new ArrayList<byte[]>(fieldDefs.size());
+        byte[] fromKey = null;
+        byte[] toKey = null;
+
         Query.RangeCondition rangeCond = query.getRangeCondition();
-        int offset = 0;
         boolean rangeCondSet = false;
         int usedConditionsCount = 0;
         int i = 0;
@@ -210,7 +246,8 @@ public class Index {
             Query.EqualsCondition eqCond = query.getCondition(fieldDef.getName());
             if (eqCond != null) {
                 checkQueryValueType(fieldDef, eqCond.getValue());
-                offset = putField(fromKey, offset, fieldDef, eqCond.getValue());
+                byte[] bytes = fieldToBytes(fieldDef, eqCond.getValue(), true);
+                fromKeyComponents.add(bytes);
                 usedConditionsCount++;
             } else if (rangeCond != null) {
                 if (!rangeCond.getName().equals(fieldDef.getName())) {
@@ -219,36 +256,32 @@ public class Index {
                             " which comes earlier in the index definition.");
                 }
 
-                toKey = new byte[fromKey.length];
-                System.arraycopy(fromKey, 0, toKey, 0, offset);
+                List<byte[]> toKeyComponents = new ArrayList<byte[]>(fromKeyComponents.size() + 1);
+                toKeyComponents.addAll(fromKeyComponents);
 
                 Object fromValue = query.getRangeCondition().getFromValue();
                 Object toValue = query.getRangeCondition().getToValue();
 
-                int fromEnd;
-                int toEnd;
-
                 if (fromValue == Query.MIN_VALUE) {
-                    // array is filled with zeros by default, which is smaller than anything else
-                    fromEnd = offset + fieldDef.getLength() + FIELD_OVERHEAD;
+                    // just leave of the value, a shorter key is smaller than anything else
                 } else {
                     checkQueryValueType(fieldDef, fromValue);
-                    fromEnd = putField(fromKey, offset, fieldDef, fromValue, false);
+                    byte[] bytes = fieldToBytes(fieldDef, fromValue, false);
+                    fromKeyComponents.add(bytes);
                 }
 
                 if (toValue == Query.MAX_VALUE) {
-                    toEnd = offset + fieldDef.getLength() + FIELD_OVERHEAD;
-                    // fill array with all 1 bits, which is larger than anything else
-                    for (int j = offset; j < toEnd; j++) {
-                        toKey[j] |= 0xFF;
-                    }
+                    // Searching to max value is equal to a prefix search (assumes always exclusive interval,
+                    // since max value is bigger than anything else)
+                    // So, append nothing to the search key.
                 } else {
                     checkQueryValueType(fieldDef, toValue);
-                    toEnd = putField(toKey, offset, fieldDef, toValue, false);
+                    byte[] bytes = fieldToBytes(fieldDef, toValue, false);
+                    toKeyComponents.add(bytes);
                 }
 
-                fromKey = reduceToLength(fromKey, fromEnd);
-                toKey = reduceToLength(toKey, toEnd);
+                fromKey = concat(fromKeyComponents);
+                toKey = concat(toKeyComponents);
 
                 rangeCondSet = true;
                 usedConditionsCount++;
@@ -278,19 +311,18 @@ public class Index {
         }
 
         if (!rangeCondSet) {
-            // Limit the keys to the length of the used fields.
-            // Note that this is different than what we do for range queries above: in the case of range queries,
-            // the keys are reduced in length to the length of the from/to value of the range condition, in order
-            // to support prefix queries. But for equals conditions we want exact matches, so we fill up the complete
-            // field length.
-            fromKey = reduceToLength(fromKey, offset);
-            toKey = new byte[fromKey.length];
-            System.arraycopy(fromKey, 0, toKey, 0, offset);
+            // Construct fromKey/toKey for the case there were only equals conditions
+            fromKey = concat(fromKeyComponents);
+            toKey = fromKey;
         }
 
         Scan scan = new Scan(fromKey);
 
-        CompareOp op = rangeCondSet && !rangeCond.isUpperBoundInclusive() ? CompareOp.LESS : CompareOp.LESS_OR_EQUAL;
+        // Query.MAX_VALUE is a value which should be larger than anything, so cannot be an inclusive upper bound
+        // The importance of this is because for Query.MAX_VALUE, we do a prefix scan so the operator should be
+        // CompareOp.LESS_OR_EQUAL
+        boolean upperBoundInclusive = rangeCond != null && (rangeCond.isUpperBoundInclusive() || rangeCond.getToValue() == Query.MAX_VALUE);
+        CompareOp op = rangeCondSet && !upperBoundInclusive ? CompareOp.LESS : CompareOp.LESS_OR_EQUAL;
         Filter toFilter = new RowFilter(op, new BinaryPrefixComparator(toKey));
 
         if (rangeCondSet && !rangeCond.isLowerBoundInclusive()) {
@@ -307,7 +339,7 @@ public class Index {
             scan.setFilter(toFilter);
         }
 
-        return new ScannerQueryResult(htable.getScanner(scan), indexKeyLength, definition.getIdentifierOrder() == Order.DESCENDING);
+        return new ScannerQueryResult(htable.getScanner(scan), definition.getIdentifierOrder() == Order.DESCENDING);
     }
 
     private void checkQueryValueType(IndexFieldDefinition fieldDef, Object value) {
@@ -318,11 +350,17 @@ public class Index {
         }
     }
 
-    private byte[] reduceToLength(byte[] bytes, int length) {
-        if (bytes.length == length)
-            return bytes;
+    private byte[] concat(List<byte[]> list) {
+        int length = 0;
+        for (byte[] bytes : list) {
+            length += bytes.length;
+        }
         byte[] result = new byte[length];
-        System.arraycopy(bytes, 0, result, 0, length);
+        int pos = 0;
+        for (byte[] bytes : list) {
+            System.arraycopy(bytes, 0, result, pos, bytes.length);
+            pos += bytes.length;
+        }
         return result;
     }
 

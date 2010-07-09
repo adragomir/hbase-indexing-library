@@ -33,19 +33,16 @@ public class LongIndexFieldDefinition extends IndexFieldDefinition {
     }
 
     @Override
-    public int toBytes(byte[] bytes, int offset, Object value) {
-        return toBytes(bytes, offset, value, true);
-    }
+    public byte[] toBytes(Object value) {
+        byte[] bytes = new byte[getLength()];
 
-    @Override
-    public int toBytes(byte[] bytes, int offset, Object value, boolean fillFieldLength) {
         long longValue = (Long)value;
-        int nextOffset = Bytes.putLong(bytes, offset, longValue);
+        Bytes.putLong(bytes, 0, longValue);
 
         // To make the longs sort correctly when comparing their binary
         // representations, we need to invert the sign bit
-        bytes[offset] = (byte)(bytes[offset] ^ 0x80);
+        bytes[0] = (byte)(bytes[0] ^ 0x80);
 
-        return nextOffset;
+        return bytes;
     }
 }

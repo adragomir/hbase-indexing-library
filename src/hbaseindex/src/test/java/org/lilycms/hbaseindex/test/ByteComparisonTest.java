@@ -111,11 +111,9 @@ public class ByteComparisonTest {
         StringIndexFieldDefinition fieldDef = new StringIndexFieldDefinition("foobar");
         fieldDef.setByteEncodeMode(StringIndexFieldDefinition.ByteEncodeMode.COLLATOR);
 
-        byte[] string1 = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(string1, 0, "\u00EAtre"); // être
+        byte[] string1 = fieldDef.toBytes("\u00EAtre"); // être
 
-        byte[] string2 = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(string2, 0, "heureux");
+        byte[] string2 = fieldDef.toBytes("heureux");
 
         assertTrue(Bytes.compareTo(string1, string2) < 0);
     }
@@ -125,11 +123,9 @@ public class ByteComparisonTest {
         StringIndexFieldDefinition fieldDef = new StringIndexFieldDefinition("foobar");
         fieldDef.setByteEncodeMode(StringIndexFieldDefinition.ByteEncodeMode.UTF8);
 
-        byte[] string1 = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(string1, 0, "\u00EAtre");
+        byte[] string1 = fieldDef.toBytes("\u00EAtre");
 
-        byte[] string2 = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(string2, 0, "heureux");
+        byte[] string2 = fieldDef.toBytes("heureux");
 
         assertTrue(Bytes.compareTo(string1, string2) > 0);
     }
@@ -139,34 +135,29 @@ public class ByteComparisonTest {
         StringIndexFieldDefinition fieldDef = new StringIndexFieldDefinition("foobar");
         fieldDef.setByteEncodeMode(StringIndexFieldDefinition.ByteEncodeMode.ASCII_FOLDING);
 
-        byte[] string1 = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(string1, 0, "\u00EAtre");
+        byte[] string1 = fieldDef.toBytes("\u00EAtre");
 
-        byte[] string2 = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(string2, 0, "etre");
+        byte[] string2 = fieldDef.toBytes("etre");
 
         assertTrue(Bytes.compareTo(string1, string2) == 0);               
     }
 
     private byte[] toSortableBytes(int value) {
         IntegerIndexFieldDefinition fieldDef = new IntegerIndexFieldDefinition("foobar");
-        byte[] result = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(result, 0, value);
+        byte[] result = fieldDef.toBytes(value);
         return result;
     }
 
     private byte[] toSortableBytes(float value) {
         FloatIndexFieldDefinition fieldDef = new FloatIndexFieldDefinition("foobar");
-        byte[] result = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(result, 0, value);
+        byte[] result = fieldDef.toBytes(value);
         return result;
     }
 
     private byte[] toSortableBytes(BigDecimal value) {
         DecimalIndexFieldDefinition fieldDef = new DecimalIndexFieldDefinition("foobar");
         fieldDef.setLength(50);
-        byte[] result = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(result, 0, value);
+        byte[] result = fieldDef.toBytes(value);
         return result;
     }
 
@@ -212,10 +203,12 @@ public class ByteComparisonTest {
         // Verify cutoff of precision
         DecimalIndexFieldDefinition fieldDef = new DecimalIndexFieldDefinition("foobar");
         fieldDef.setLength(5);
-        byte[] r1 = new byte[fieldDef.getLength()];
-        byte[] r2 = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(r1, 0, new BigDecimal("10.000000000000000000000000000000000000000000000000000000000000001"));
-        fieldDef.toBytes(r2, 0, new BigDecimal("10.000000000000000000000000000000000000000000000000000000000000002"));
+        byte[] r1 = fieldDef.toBytes(new BigDecimal("10.000000000000000000000000000000000000000000000000000000000000001"));
+        byte[] r2 = fieldDef.toBytes(new BigDecimal("10.000000000000000000000000000000000000000000000000000000000000002"));
+
+        assertEquals(5, r1.length);
+        assertEquals(5, r2.length);
+
         assertEquals(0, Bytes.compareTo(r1, r2));
 
         // Verify checks on maximum supported exponents
@@ -288,8 +281,7 @@ public class ByteComparisonTest {
         DateTimeIndexFieldDefinition fieldDef = new DateTimeIndexFieldDefinition("foobar");
         fieldDef.setPrecision(precision);
 
-        byte[] bytes = new byte[fieldDef.getLength()];
-        fieldDef.toBytes(bytes, 0, calendar.getTime());
+        byte[] bytes = fieldDef.toBytes(calendar.getTime());
         return bytes;
     }
 

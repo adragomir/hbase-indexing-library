@@ -53,11 +53,6 @@ public class DecimalIndexFieldDefinition extends IndexFieldDefinition {
         this.length = length;
     }
 
-    @Override
-    public int toBytes(byte[] bytes, int offset, Object value) {
-        return toBytes(bytes, offset, value, true);
-    }
-
     /**
      * Converts a decimal to sortable bytes.
      *
@@ -79,7 +74,8 @@ public class DecimalIndexFieldDefinition extends IndexFieldDefinition {
      *
      */
     @Override
-    public int toBytes(byte[] bytes, int offset, Object value, boolean fillFieldLength) {
+    public byte[] toBytes(Object value) {
+        byte[] bytes = new byte[getLength()];
         BigDecimal dec = (BigDecimal)value;
 
         BigInteger mantissa = dec.unscaledValue();
@@ -102,26 +98,23 @@ public class DecimalIndexFieldDefinition extends IndexFieldDefinition {
             exp ^= 0xFF;
         }
 
-        // Result array
-        int resultByteSize = Math.min(mantissaBytes.length + 2, length);
-
         // Copy exponent into result array
-        bytes[offset] = (byte)exp;
+        bytes[0] = (byte)exp;
         exp >>>= 8;
-        bytes[offset + 1] = (byte)exp;
+        bytes[1] = (byte)exp;
 
         // Set the sign bit
         if (signum >= 0) {
-            bytes[offset] = (byte)(bytes[offset] | 0x80);
+            bytes[0] = (byte)(bytes[0] | 0x80);
         } else {
-            bytes[offset] = (byte)(bytes[offset] & 0x7F);
+            bytes[0] = (byte)(bytes[0] & 0x7F);
         }
 
         // Copy mantissa into result array
         int mantissaLength = Math.min(mantissaBytes.length, length - 2);
-        System.arraycopy(mantissaBytes, 0, bytes, offset + 2, mantissaLength);
+        System.arraycopy(mantissaBytes, 0, bytes, 2, mantissaLength);
 
-        return offset + length;
+        return bytes;
     }
 
     @Override

@@ -25,7 +25,7 @@ import java.io.IOException;
  * <p>The supplied QueryResults should adhere to the same requirements as for
  * {@link Conjunction}s. 
  */
-public class Disjunction implements QueryResult {
+public class Disjunction extends BaseQueryResult {
     private QueryResult result1;
     private QueryResult result2;
     private byte[] key1;
@@ -48,10 +48,12 @@ public class Disjunction implements QueryResult {
             return null;
         } else if (key1 == null) {
             byte[] result = key2;
+            currentQResult = result2;
             key2 = result2.next();
             return result;
         } else if (key2 == null) {
             byte[] result = key1;
+            currentQResult = result1;
             key1 = result1.next();
             return result;
         }
@@ -60,15 +62,18 @@ public class Disjunction implements QueryResult {
 
         if (cmp == 0) {
             byte[] result = key1;
+            currentQResult = result1;
             key1 = result1.next();
             key2 = result2.next();
             return result;
         } else if (cmp < 0) {
             byte[] result = key1;
+            currentQResult = result1;
             key1 = result1.next();
             return result;
         } else { // cmp > 0
             byte[] result = key2;
+            currentQResult = result2;
             key2 = result2.next();
             return result;
         }

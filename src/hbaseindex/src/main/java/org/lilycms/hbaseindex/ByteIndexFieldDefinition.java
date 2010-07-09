@@ -20,7 +20,9 @@ import org.codehaus.jackson.node.ObjectNode;
 /**
  * This kind of field allows to store arbitrary bytes (a byte array)
  * in the index key, the ideal fallback the case none of the other
- * types suite your needs.
+ * types suite your needs. Only for fixed-length byte arrays, if the
+ * provided value is longer it will be cut off, otherwise it will
+ * be padded with zeros.
  */
 public class ByteIndexFieldDefinition extends IndexFieldDefinition {
     private int length = 10;
@@ -52,19 +54,17 @@ public class ByteIndexFieldDefinition extends IndexFieldDefinition {
     }
 
     @Override
-    public int toBytes(byte[] bytes, int offset, Object value) {
-        return toBytes(bytes, offset, value, true);
-    }
-
-    @Override
-    public int toBytes(byte[] bytes, int offset, Object value, boolean fillFieldLength) {
+    public byte[] toBytes(Object value) {
         byte[] byteValue = (byte[])value;
+        if (byteValue.length == getLength())
+            return byteValue;
 
+        byte[] bytes = new byte[getLength()];
 
         int copyLength = byteValue.length < length ? byteValue.length : length;
-        System.arraycopy(byteValue, 0, bytes, offset, copyLength);
+        System.arraycopy(byteValue, 0, bytes, 0, copyLength);
 
-        return fillFieldLength ? offset + length : offset + copyLength;
+        return bytes;
     }
 
     @Override

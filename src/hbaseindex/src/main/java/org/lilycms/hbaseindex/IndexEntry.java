@@ -15,6 +15,9 @@
  */
 package org.lilycms.hbaseindex;
 
+import org.apache.hadoop.hbase.util.Bytes;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,17 +35,62 @@ import java.util.Map;
  * <p>Missing fields will be interpreted as fields with a null value.
  */
 public class IndexEntry {
-    private Map<String, Object> values = new HashMap<String, Object>();
+    private Map<String, Object> fields = new HashMap<String, Object>();
+    private Map<ByteArrayKey, byte[]> data = new HashMap<ByteArrayKey, byte[]>();
 
     public void addField(String name, Object value) {
-        values.put(name, value);
+        fields.put(name, value);
     }
 
     public Object getValue(String name) {
-        return values.get(name);
+        return fields.get(name);
     }
 
-    protected Map<String, Object> getValues() {
-        return values;
+    protected Map<String, Object> getFields() {
+        return fields;
+    }
+
+    public void addData(byte[] qualifier, byte[] value) {
+        data.put(new ByteArrayKey(qualifier), value);
+    }
+
+    /**
+     * Convenience variant of {@link #addData(byte[], byte[])} which does
+     * the conversion to bytes for you.
+     */
+    public void addData(String qualifier, String value) {
+        addData(Bytes.toBytes(qualifier), Bytes.toBytes(value));
+    }
+
+    public byte[] getData(byte[] qualifier) {
+        return data.get(qualifier);
+    }
+
+    protected Map<ByteArrayKey, byte[]> getData() {
+        return data;
+    }
+
+    protected static class ByteArrayKey {
+        private byte[] key;
+        private int hash;
+
+        public ByteArrayKey(byte[] key) {
+            this.key = Arrays.copyOf(key, key.length);
+            this.hash = Arrays.hashCode(key);
+        }
+
+        public byte[] getKey() {
+            return key;
+        }
+
+        @Override
+        public int hashCode() {
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof ByteArrayKey && Arrays.equals(key, ((ByteArrayKey)obj).key);
+        }
     }
 }

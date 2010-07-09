@@ -17,38 +17,32 @@ package org.lilycms.hbaseindex;
 
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.util.Bytes;
 
 import java.io.IOException;
 
 /**
  * A QueryResult on top of a HBase scanner.
  */
-class ScannerQueryResult implements QueryResult {
+class ScannerQueryResult extends BaseQueryResult {
     private ResultScanner scanner;
-    private int indexKeyLength;
     private boolean invertIdentifier;
 
-    public ScannerQueryResult(ResultScanner scanner, int indexKeyLength, boolean invertIdentifier) {
+    public ScannerQueryResult(ResultScanner scanner, boolean invertIdentifier) {
         this.scanner = scanner;
-        this.indexKeyLength = indexKeyLength;
         this.invertIdentifier = invertIdentifier;
     }
 
     public byte[] next() throws IOException {
-        Result result = scanner.next();
-        if (result == null)
+        currentResult = scanner.next();
+        if (currentResult == null) {
             return null;
-
-        byte[] rowKey = result.getRow();
-        byte[] identifier = new byte[rowKey.length - indexKeyLength];
-        System.arraycopy(rowKey, indexKeyLength, identifier, 0, identifier.length);
-
-        if (invertIdentifier) {
-            for (int i = 0; i < identifier.length; i++) {
-                identifier[i] ^= 0xFF;
-            }
         }
 
+        byte[] rowKey = currentResult.getRow();
+
+        byte[] identifier = IdentifierEncoding.decode(rowKey, invertIdentifier);
+        
         return identifier;
     }
 }

@@ -77,7 +77,7 @@ public class IndexManager {
         byte[] jsonData = serialize(indexDef);
 
         HTableDescriptor table = new HTableDescriptor(indexDef.getName());
-        HColumnDescriptor family = new HColumnDescriptor("dummy");
+        HColumnDescriptor family = new HColumnDescriptor(Index.DATA_FAMILY);
         table.addFamily(family);
         hbaseAdmin.createTable(table);
 

@@ -26,6 +26,7 @@ public abstract class IndexFieldDefinition {
     private final String name;
     private Order order;
     private IndexValueType type;
+    private static final byte[] EOF_MARKER = new byte[0];
 
     public IndexFieldDefinition(String name, IndexValueType type) {
         this(name, type, Order.ASCENDING);
@@ -63,32 +64,26 @@ public abstract class IndexFieldDefinition {
 
     /**
      * The length of this index field in bytes, thus the number of bytes
-     * this entry needs in the index row key.
+     * this entry needs in the index row key. For variable-length fields,
+     * this should return -1.
      */
     public abstract int getLength();
 
     /**
-     * Same as the other toBytes method, with fillFieldLength = true.
-     */
-    public abstract int toBytes(byte[] bytes, int offset, Object value);
-
-    /**
      * Converts the specified value to bytes according to the rules of this
      * IndexFieldDefinition.
-     *
-     * @param bytes the byte array into which the bytes should be added. The byte array
-     *              should be large enough to store {@link #getLength()} bytes after the
-     *              offset.
-     * @param offset the offset at which the bytes should be added
-     * @param value the value, assumed to be of the correct type
-     * @param fillFieldLength if true, the bytes will be padded up to {@link #getLength ()},
-     *                        and the returned offset will hence be located after this length.
-     *                        If false, the returned offset will only be after the actual
-     *                        value length. Note that data types like number always use the
-     *                        same length, this is mainly intended for strings.
-     * @return the offset after the written data, thus where the next data could be written
      */
-    public abstract int toBytes(byte[] bytes, int offset, Object value, boolean fillFieldLength);
+    public abstract byte[] toBytes(Object value);
+
+    /**
+     * For variable-length fields, returns a sequence which should be used
+     * to mark the end of the field. It is an error if this sequence occurs
+     * in the value. For fixed-length fields, this should return a zero-length
+     * byte array.
+     */
+    public byte[] getEndOfFieldMarker() {
+        return EOF_MARKER;
+    }
 
     public ObjectNode toJson() {
         JsonNodeFactory factory = JsonNodeFactory.instance;

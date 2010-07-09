@@ -39,14 +39,11 @@ public class FloatIndexFieldDefinition  extends IndexFieldDefinition {
     }
 
     @Override
-    public int toBytes(byte[] bytes, int offset, Object value) {
-        return toBytes(bytes, offset, value, true);
-    }
+    public byte[] toBytes(Object value) {
+        byte[] bytes = new byte[getLength()];
 
-    @Override
-    public int toBytes(byte[] bytes, int offset, Object value, boolean fillFieldLength) {
         float floatVal = (Float)value;
-        int nextOffset = Bytes.putFloat(bytes, offset, floatVal);
+        Bytes.putFloat(bytes, 0, floatVal);
 
         // Alter the binary representation of the float such that when comparing
         // the binary representations, the floats compare the same as when they
@@ -69,18 +66,18 @@ public class FloatIndexFieldDefinition  extends IndexFieldDefinition {
         // should be fine
 
         // Check the leftmost bit to determine if the value is negative
-        int test = (bytes[offset] >>> 7) & 0x01;
+        int test = (bytes[0] >>> 7) & 0x01;
         if (test == 1) {
             // Negative numbers: invert all bits: sign, exponent and mantissa
-            for (int i = offset; i < getLength(); i++) {
+            for (int i = 0; i < getLength(); i++) {
                 bytes[i] = (byte)(bytes[i] ^ 0xFF);
             }
         } else {
             // Positive numbers: invert the sign bit
-            bytes[offset] = (byte)(bytes[offset] | 0x80);
+            bytes[0] = (byte)(bytes[0] | 0x80);
         }
 
-        return nextOffset;
+        return bytes;
     }
 }
 
