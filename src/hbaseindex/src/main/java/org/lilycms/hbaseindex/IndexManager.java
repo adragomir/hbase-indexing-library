@@ -113,7 +113,7 @@ public class IndexManager {
    * @throws IndexNotFoundException if the index does not exist
    */
   public Index getIndex(String table, String name) throws IOException, IndexNotFoundException {
-    Get get = new Get(Bytes.toBytes(name));
+    Get get = new Get(Bytes.toBytes(IndexDefinition.buildIndexName(table, name)));
     Result result = metaTable.get(get);
 
     if (result.isEmpty())

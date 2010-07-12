@@ -133,6 +133,7 @@ public class Index {
   private byte[] buildRowKey(IndexEntry entry, byte[] identifier) {
     List<byte[]> keyComponents = new ArrayList<byte[]>();
 
+    keyComponents.add(Bytes.toBytes(definition.getFullName()));
     for (IndexFieldDefinition fieldDef : definition.getFields()) {
       Object value = entry.getValue(fieldDef.getName());
       byte[] bytes = fieldToBytes(fieldDef, value, true);
@@ -233,6 +234,7 @@ public class Index {
     List<IndexFieldDefinition> fieldDefs = definition.getFields();
 
     List<byte[]> fromKeyComponents = new ArrayList<byte[]>(fieldDefs.size());
+    fromKeyComponents.add(Bytes.toBytes(definition.getFullName()));
     byte[] fromKey = null;
     byte[] toKey = null;
 
