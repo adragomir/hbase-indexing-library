@@ -16,14 +16,16 @@
 package org.lilycms.hbaseindex;
 
 public class IndexNotFoundException extends Exception {
-    private String indexName;
+  private String index;
+  private String table;
 
-    public IndexNotFoundException(String indexName) {
-        this.indexName = indexName;
-    }
+  public IndexNotFoundException(String table, String index) {
+    this.index = index;
+    this.table = table;
+  }
 
-    @Override
-    public String getMessage() {
-        return "No such index: " + indexName;
-    }
+  @Override
+  public String getMessage() {
+    return "No such index: " + index + " on table: " + table;
+  }
 }

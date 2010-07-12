@@ -18,6 +18,7 @@ package org.lilycms.hbaseindex;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableExistsException;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -34,131 +35,150 @@ import java.io.IOException;
  * instances.
  */
 public class IndexManager {
-    private Configuration hbaseConf;
-    private HBaseAdmin hbaseAdmin;
-    private HTable metaTable;
+  private Configuration hbaseConf;
+  private HBaseAdmin hbaseAdmin;
+  private String metaTableName;
+  private String dataTableName;
+  private HTable metaTable;
+  private HTable dataTable;
 
-    public static final String DEFAULT_META_TABLE = "indexmeta";
+  public static final String DEFAULT_META_TABLE = "indexmeta";
+  public static final String DEFAULT_DATA_TABLE = "indexdata";
 
-    /**
-     * Constructor.
-     *
-     * <p>Calls {@link #IndexManager(Configuration, String) IndexManager(hbaseConf, DEFAULT_META_TABLE)}.
-     */
-    public IndexManager(Configuration hbaseConf) throws IOException {
-        this(hbaseConf, DEFAULT_META_TABLE);
+  /**
+   * Constructor.
+   *
+   * <p>Calls {@link #IndexManager(Configuration, String, String) IndexManager(hbaseConf, DEFAULT_META_TABLE)}.
+   */
+  public IndexManager(Configuration hbaseConf) throws IOException {
+    this(hbaseConf, DEFAULT_META_TABLE, DEFAULT_DATA_TABLE);
+  }
+
+  /**
+   * Constructor.
+   *
+   * <p>The supplied metaTableName should be an existing table. You can use the utility
+   * method {@link #createIndexMetaTable} to create this table.
+   *
+   * @param metaTableName name of the HBase table in which to manage the configuration of the indexes
+   */
+  public IndexManager(Configuration hbaseConf, String metaTableName, String dataTableName) throws IOException {
+    this.hbaseConf = hbaseConf;
+    hbaseAdmin = new HBaseAdmin(hbaseConf);
+    this.metaTableName = metaTableName;
+    this.dataTableName = dataTableName;
+    metaTable = new HTable(hbaseConf, this.metaTableName);
+    dataTable = new HTable(hbaseConf, this.dataTableName);
+  }
+
+  /**
+   * Creates a new index.
+   *
+   * <p>This first creates the HBase table for this index, then adds the index
+   * definition to the indexmeta table.
+   */
+  public synchronized void createIndex(IndexDefinition indexDef) throws IOException {
+    if (indexDef.getFields().size() == 0) {
+      throw new IllegalArgumentException("An IndexDefinition should contain at least one field.");
     }
 
-    /**
-     * Constructor.
-     *
-     * <p>The supplied metaTableName should be an existing table. You can use the utility
-     * method {@link #createIndexMetaTable} to create this table.
-     *
-     * @param metaTableName name of the HBase table in which to manage the configuration of the indexes
-     */
-    public IndexManager(Configuration hbaseConf, String metaTableName) throws IOException {
-        this.hbaseConf = hbaseConf;
-        hbaseAdmin = new HBaseAdmin(hbaseConf);
-        metaTable = new HTable(hbaseConf, metaTableName);
+    byte[] jsonData = serialize(indexDef);
+
+    try {
+      IndexManager.createIndexDataTable(hbaseConf, this.dataTableName);
+    } catch (TableExistsException x) {
+      // do nothing
     }
+    
+    Put put = new Put(Bytes.toBytes(indexDef.getFullName()));
+    put.add(Bytes.toBytes("meta"), Bytes.toBytes("conf"), jsonData);
+    metaTable.put(put);
+  }
 
-    /**
-     * Creates a new index.
-     *
-     * <p>This first creates the HBase table for this index, then adds the index
-     * definition to the indexmeta table.
-     */
-    public synchronized void createIndex(IndexDefinition indexDef) throws IOException {
-        if (indexDef.getFields().size() == 0) {
-            throw new IllegalArgumentException("An IndexDefinition should contain at least one field.");
-        }
+  private byte[] serialize(IndexDefinition indexDef) throws IOException {
+    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.writeValue(os, indexDef.toJson());
+    return os.toByteArray();
+  }
 
-        byte[] jsonData = serialize(indexDef);
+  private IndexDefinition deserialize(String table, String name, byte[] jsonData) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    return new IndexDefinition(table, name, mapper.readValue(jsonData, 0, jsonData.length, ObjectNode.class));
+  }
 
-        HTableDescriptor table = new HTableDescriptor(indexDef.getName());
-        HColumnDescriptor family = new HColumnDescriptor(Index.DATA_FAMILY);
-        table.addFamily(family);
-        hbaseAdmin.createTable(table);
+  /**
+   * Retrieves an Index.
+   *
+   * @throws IndexNotFoundException if the index does not exist
+   */
+  public Index getIndex(String table, String name) throws IOException, IndexNotFoundException {
+    Get get = new Get(Bytes.toBytes(name));
+    Result result = metaTable.get(get);
 
-        Put put = new Put(Bytes.toBytes(indexDef.getName()));
-        put.add(Bytes.toBytes("meta"), Bytes.toBytes("conf"), jsonData);
-        metaTable.put(put);
-    }
+    if (result.isEmpty())
+      throw new IndexNotFoundException(table, name);
 
-    private byte[] serialize(IndexDefinition indexDef) throws IOException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(os, indexDef.toJson());
-        return os.toByteArray();
-    }
+    byte[] jsonData = result.getValue(Bytes.toBytes("meta"), Bytes.toBytes("conf"));
+    IndexDefinition indexDef = deserialize(table, name, jsonData);
 
-    private IndexDefinition deserialize(String name, byte[] jsonData) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return new IndexDefinition(name, mapper.readValue(jsonData, 0, jsonData.length, ObjectNode.class));
-    }
+    HTable htable = new HTable(hbaseConf, name);
+    Index index = new Index(htable, indexDef);
+    return index;
+  }
 
-    /**
-     * Retrieves an Index.
-     *
-     * @throws IndexNotFoundException if the index does not exist
-     */
-    public Index getIndex(String name) throws IOException, IndexNotFoundException {
-        Get get = new Get(Bytes.toBytes(name));
-        Result result = metaTable.get(get);
+  /**
+   * Deletes an index.
+   *
+   * <p>This removes the index definition from the index meta table, disables the
+   * index table and deletes it. If this would fail in between any of these operations,
+   * it is up to the administrator to perform the remaining work.
+   *
+   * @throws IndexNotFoundException if the index does not exist.
+   */
+  public synchronized void deleteIndex(String table, String name) throws IOException, IndexNotFoundException {
+    Get get = new Get(Bytes.toBytes(IndexDefinition.buildIndexName(table, name)));
+    Result result = metaTable.get(get);
 
-        if (result.isEmpty())
-            throw new IndexNotFoundException(name);
+    if (result.isEmpty())
+      throw new IndexNotFoundException(table, name);
 
-        byte[] jsonData = result.getValue(Bytes.toBytes("meta"), Bytes.toBytes("conf"));
-        IndexDefinition indexDef = deserialize(name, jsonData);
+    // TODO what if this fails in between operations? Log this...
 
-        HTable htable = new HTable(hbaseConf, name);
-        Index index = new Index(htable, indexDef);
-        return index;
-    }
+    Delete del = new Delete(Bytes.toBytes(IndexDefinition.buildIndexName(table, name)));
+    metaTable.delete(del);
 
-    /**
-     * Deletes an index.
-     *
-     * <p>This removes the index definition from the index meta table, disables the
-     * index table and deletes it. If this would fail in between any of these operations,
-     * it is up to the administrator to perform the remaining work.
-     *
-     * @throws IndexNotFoundException if the index does not exist.
-     */
-    public synchronized void deleteIndex(String name) throws IOException, IndexNotFoundException {
-        Get get = new Get(Bytes.toBytes(name));
-        Result result = metaTable.get(get);
+    //TODO: background mr to delete the indexed rows
+  }
 
-        if (result.isEmpty())
-            throw new IndexNotFoundException(name);
+  /**
+   * Utility method for creating the indexmeta table.
+   */
+  public static void createIndexMetaTable(Configuration hbaseConf, String metaTableName) throws IOException {
+    HBaseAdmin hbaseAdmin = new HBaseAdmin(hbaseConf);
+    HTableDescriptor table = new HTableDescriptor(metaTableName);
+    HColumnDescriptor family = new HColumnDescriptor("meta");
+    table.addFamily(family);
+    hbaseAdmin.createTable(table);
+  }
 
-        // TODO what if this fails in between operations? Log this...
+  public static void createIndexDataTable(Configuration hbaseConf, String dataTableName) throws IOException {
+    HBaseAdmin hbaseAdmin = new HBaseAdmin(hbaseConf);
+    HTableDescriptor table = new HTableDescriptor(dataTableName);
+    HColumnDescriptor family = new HColumnDescriptor(Index.DATA_FAMILY);
+    table.addFamily(family);
+    hbaseAdmin.createTable(table);
+  }
 
-        Delete del = new Delete(Bytes.toBytes(name));
-        metaTable.delete(del);
+  /**
+   * Utility method for creating the indexmeta table.
+   */
+  public static void createIndexMetaTable(Configuration hbaseConf) throws IOException {
+    IndexManager.createIndexMetaTable(hbaseConf, IndexManager.DEFAULT_META_TABLE);
+  }
 
-        hbaseAdmin.disableTable(name);
-        hbaseAdmin.deleteTable(name);
-    }
+  public static void createIndexDataTable(Configuration hbaseConf) throws IOException {
+    IndexManager.createIndexDataTable(hbaseConf, IndexManager.DEFAULT_DATA_TABLE);
+  }
 
-    /**
-     * Utility method for creating the indexmeta table.
-     */
-    public static void createIndexMetaTable(Configuration hbaseConf, String metaTableName) throws IOException {
-        HBaseAdmin hbaseAdmin = new HBaseAdmin(hbaseConf);
-        HTableDescriptor table = new HTableDescriptor(metaTableName);
-        HColumnDescriptor family = new HColumnDescriptor("meta");
-        table.addFamily(family);
-        hbaseAdmin.createTable(table);
-    }
-
-    public static void createIndexMetaTable(Configuration hbaseConf) throws IOException {
-        HBaseAdmin hbaseAdmin = new HBaseAdmin(hbaseConf);
-        HTableDescriptor table = new HTableDescriptor(DEFAULT_META_TABLE);
-        HColumnDescriptor family = new HColumnDescriptor("meta");
-        table.addFamily(family);
-        hbaseAdmin.createTable(table);
-    }
 }
