@@ -26,6 +26,8 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Starting point for all the index and query functionality.
@@ -42,6 +44,8 @@ public class IndexManager {
   private HTable metaTable;
   private HTable dataTable;
 
+  private Map<String, Map<String, IndexDefinition>> indexes;
+  
   public static final String DEFAULT_META_TABLE = "indexmeta";
   public static final String DEFAULT_DATA_TABLE = "indexdata";
 
@@ -69,6 +73,7 @@ public class IndexManager {
     this.dataTableName = dataTableName;
     metaTable = new HTable(hbaseConf, this.metaTableName);
     dataTable = new HTable(hbaseConf, this.dataTableName);
+    indexes = new TreeMap<String, Map<String, IndexDefinition>>(); 
   }
 
   /**
@@ -127,6 +132,26 @@ public class IndexManager {
     return index;
   }
 
+  public Index[] getTableIndexes(String table) {
+    
+  }
+
+  public void loadAllIndexes() throws IOException {
+    Scan scan = new Scan();
+    scan.setCaching(10000);
+    metaTable.getScanner(scan);
+    ResultScanner resScanner = metaTable.getScanner(scan);
+    Result[] results = resScanner.next(10000);
+    for (Result r: results) {
+      String[] ti = Bytes.toString(r.getRow()).split("::");
+      if (!indexes.containsKey(ti[0])) {
+        indexes.put(ti[0], new TreeMap<String, IndexDefinition>());
+      }
+      byte[] jsonData = r.getValue(Bytes.toBytes("meta"), Bytes.toBytes("conf"));
+      IndexDefinition indexDef = deserialize(ti[0], ti[1], jsonData);
+      indexes.get(ti[0]).put(ti[1], indexDef);
+    }
+  }
   /**
    * Deletes an index.
    *
