@@ -26,6 +26,8 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -132,8 +134,8 @@ public class IndexManager {
     return index;
   }
 
-  public Index[] getTableIndexes(String table) {
-    
+  public Map<String, IndexDefinition> getTableIndexes(String table) {
+    return Collections.unmodifiableMap(indexes.get(table));
   }
 
   public void loadAllIndexes() throws IOException {
@@ -143,10 +145,12 @@ public class IndexManager {
     ResultScanner resScanner = metaTable.getScanner(scan);
     Result[] results = resScanner.next(10000);
     for (Result r: results) {
+      // table::index
       String[] ti = Bytes.toString(r.getRow()).split("::");
       if (!indexes.containsKey(ti[0])) {
         indexes.put(ti[0], new TreeMap<String, IndexDefinition>());
       }
+      // get the index data, add it to the map
       byte[] jsonData = r.getValue(Bytes.toBytes("meta"), Bytes.toBytes("conf"));
       IndexDefinition indexDef = deserialize(ti[0], ti[1], jsonData);
       indexes.get(ti[0]).put(ti[1], indexDef);
