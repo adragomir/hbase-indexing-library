@@ -129,7 +129,7 @@ public class IndexManager {
     byte[] jsonData = result.getValue(Bytes.toBytes("meta"), Bytes.toBytes("conf"));
     IndexDefinition indexDef = deserialize(table, name, jsonData);
 
-    HTable htable = new HTable(hbaseConf, name);
+    HTable htable = new HTable(hbaseConf, dataTableName);
     Index index = new Index(htable, indexDef);
     return index;
   }
